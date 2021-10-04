@@ -15,8 +15,9 @@ class ClientHandler extends Thread {
 
     public void run(){
       try{
-        InputStream inStream = new DataInputStream(serverClient.getInputStream());
-        byte[] data = inStream.readAllBytes();
+        DataInputStream inStream = new DataInputStream(serverClient.getInputStream());
+        byte[] data = new byte[100];
+        inStream.readFully(data);
         Message msg = new Message(clientNodeID, data);
         listener.receive(msg);
         // while(!clientMessage.equals("bye")){

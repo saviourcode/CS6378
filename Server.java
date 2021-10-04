@@ -1,5 +1,8 @@
 import java.net.*;
 import java.util.*;
+
+import jdk.incubator.foreign.CLinker;
+
 import java.lang.*;
 
 public class Server extends Thread {
@@ -11,8 +14,7 @@ public class Server extends Thread {
     private HashMap<String, NodeID> reverseNodeInfo = new HashMap<>();
     private Exception NullPointerException;
 
-    Server(Node ServerNode)
-    {
+    Server(Node ServerNode) {
         this.ServerNode = ServerNode;
         this.nodeInfo = ServerNode.getNodeInfo();
         this.NodeID = ServerNode.getNodeID();
@@ -22,26 +24,25 @@ public class Server extends Thread {
     }
 
     public void run() {
-        
-    try{
-        ServerSocket server = new ServerSocket(this.PortNum);
-      System.out.println("Server Started ....");
-      while(true){
-        Socket serverClient=server.accept();  //server accept the client connection request
-        SocketAddress remoteSocketAddress = serverClient.getRemoteSocketAddress();
-        String ClientIP = remoteSocketAddress.toString();
-        System.out.println(" >> " + "Client No:" + NodeID + " started!");
-        if(reverseNodeInfo.get(ClientIP) == null)
-        {
-            System.out.println("Client IP not found in our map");
-            throw NullPointerException;
+
+        try {
+            ServerSocket server = new ServerSocket(this.PortNum);
+            System.out.println("Server Started ....");
+            while (true) {
+                Socket serverClient = server.accept(); // server accept the client connection request
+                SocketAddress remoteSocketAddress = serverClient.getRemoteSocketAddress();
+                String ClientIP = remoteSocketAddress.toString();
+                System.out.println(" >> " + "Client No:" + NodeID.getID() + " " + ClientIP + " started!");
+                if (reverseNodeInfo.get(ClientIP) == null) {
+                    System.out.println("Client IP not found in our map");
+                    throw NullPointerException;
+                }
+                ClientHandler sct = new ClientHandler(serverClient, reverseNodeInfo.get(ClientIP), listener); // Send the request to seperate thread
+                sct.start();
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        ClientHandler sct = new ClientHandler(serverClient, reverseNodeInfo.get(ClientIP), listener); //send  the request to a separate thread
-        sct.start();
-      }
-      
-    }catch(Exception e){
-      System.out.println(e);
     }
-  }
 }
