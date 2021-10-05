@@ -18,16 +18,16 @@ class ClientHandler extends Thread {
         {
             try {
                 DataInputStream inStream = new DataInputStream(serverClient.getInputStream());
-                System.out.println(inStream);
                 byte[] data = new byte[100];
+                System.out.println("Waiting for data from the socket ...");
                 inStream.read(data);
                 System.out.println("Passed this block " + data);
                 Message msg = new Message(clientNodeID, data);
                 listener.receive(msg);
                 inStream.close();
             } catch (java.net.SocketException ex) {
+                System.out.println(ex + "calling broken Now");
                 listener.broken(clientNodeID);
-                System.out.println(ex);
                 break;
             }
             catch (Exception ex){

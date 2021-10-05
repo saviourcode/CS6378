@@ -80,7 +80,6 @@ class Node {
 	}
 
 	private void fileParser(String configFile) {
-
 		File file = new File(configFile);
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			String line = "";
@@ -138,7 +137,6 @@ class Node {
 			try {
 				neighborConn.put(neighbor.getID(), new Socket(IPaddr, portNo));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -155,7 +153,6 @@ class Node {
 			OutputStream outStream = new DataOutputStream(clientServer.getOutputStream());
 			outStream.write(message.data);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

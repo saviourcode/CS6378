@@ -31,7 +31,6 @@ class Application implements Listener
 	{
 		//Extract payload from message
 		Payload p = Payload.getPayload(message.data);
-		System.out.println(p.messageType+" "+pred);	
 		if(p.messageType == 1)
 		{
 			//Messagetype 1 is ring detection
@@ -42,7 +41,7 @@ class Application implements Listener
 				//Set isRing to true and wakeup all waits using notifyAll()
 				isRing = true;
 				detectingRing = false;
-				System.out.println("Recieve Type 1, Node ID: " + myID.getID());
+				System.out.println("Node 0 Confirmed it's a ring.");
 				notifyAll();
 			}
 			else if(neighbors.length != 2)
@@ -74,7 +73,7 @@ class Application implements Listener
 				isRing = false;
 				detectingRing = false;
 				//Wakeup all processes that invoked wait()
-				System.out.println("Recieve Type 2, Node ID: " + myID.getID());
+				System.out.println("Node 0 Confirmed it's not a ring.");
 				notifyAll();
 			}
 			else
@@ -85,7 +84,7 @@ class Application implements Listener
 				myNode.send(msg, pred);
 			}
 		}
-		
+		System.out.println(p.messageType+" "+pred);	
 	}
 	
 	//If communication is broken with one neighbor, tear down the node
@@ -96,7 +95,7 @@ class Application implements Listener
 			if(neighbor.getID() == neighbors[i].getID())
 			{
 				brokenNeighbors[i] = true;
-				System.out.println("Broken, Node ID: " + myID.getID() + " Neigh: " + neighbor.getID());
+				System.out.println("Socket with " + neighbor.getID() + " got closed");
 				notifyAll();
 				if(!terminating)
 				{

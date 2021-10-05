@@ -2,13 +2,13 @@ import java.net.*;
 import java.util.*;
 
 public class Server implements Runnable {
+    private static final Exception NullPointerException = null;
     int PortNum;
     NodeID NodeID;
     Node ServerNode;
     Listener listener;
     private HashMap<Integer, List<String>> nodeInfo = new HashMap<>();
     private HashMap<String, NodeID> reverseNodeInfo = new HashMap<>();
-    private Exception NullPointerException;
     private boolean shouldStop = false;
 
     Server(Node ServerNode) {
@@ -34,14 +34,9 @@ public class Server implements Runnable {
                             + " started!");
                     if (reverseNodeInfo.get(ClientIP) == null) {
                         System.out.println("Client IP not found in our map");
-                        // throw NullPointerException;
+                        throw NullPointerException;
                     } else {
-                        ClientHandler sct = new ClientHandler(serverClient, reverseNodeInfo.get(ClientIP), listener); // Send
-                                                                                                                      // the
-                                                                                                                      // request
-                                                                                                                      // to
-                                                                                                                      // seperate
-                                                                                                                      // thread
+                        ClientHandler sct = new ClientHandler(serverClient, reverseNodeInfo.get(ClientIP), listener); 
                         sct.start();
                     }
                 } catch (java.net.SocketTimeoutException e) {
@@ -53,9 +48,6 @@ public class Server implements Runnable {
         } catch (Exception e) {
             System.out.println(e);
         }
-        // NodeID[] neigbors = ServerNode.getNeighbors();
-        // for(NodeID neighbor : neigbors)
-        //     listener.broken(neighbor);
     }
 
     public void stop() {
