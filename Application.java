@@ -31,7 +31,7 @@ class Application implements Listener
 	{
 		//Extract payload from message
 		Payload p = Payload.getPayload(message.data);
-		
+		System.out.println(p.messageType+" "+pred);	
 		if(p.messageType == 1)
 		{
 			//Messagetype 1 is ring detection
@@ -120,7 +120,7 @@ class Application implements Listener
 		Payload p = new Payload(1);
 		Message msg = new Message(myID, p.toBytes());
 		myNode.send(msg, neighbors[0]);
-		
+		System.out.println("Sent Success");	
 		while(detectingRing)
 		{
 			try
@@ -179,7 +179,9 @@ class Application implements Listener
 				try
 				{
 					//wait till we get a broken reply from each neighbor
-					wait();
+				System.out.println("Before Wait");
+				wait();
+				System.out.println("After Wait");
 				}
 				catch(InterruptedException ie)
 				{

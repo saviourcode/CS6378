@@ -16,8 +16,10 @@ class ClientHandler extends Thread {
     public void run(){
       try{
         DataInputStream inStream = new DataInputStream(serverClient.getInputStream());
-        byte[] data = new byte[100];
-        inStream.readFully(data);
+        System.out.println(inStream);
+	byte[] data = new byte[100];
+        inStream.read(data);
+	System.out.println("Passed this block "+ data);
         Message msg = new Message(clientNodeID, data);
         listener.receive(msg);
         // while(!clientMessage.equals("bye")){
@@ -33,7 +35,7 @@ class ClientHandler extends Thread {
       }catch(Exception ex){
         System.out.println(ex);
       }finally{
-        System.out.println("Client -" + clientNodeID.getID() + " exit!! ");
+        
       }
     }
   }

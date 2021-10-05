@@ -1,10 +1,5 @@
 import java.net.*;
 import java.util.*;
-
-import jdk.incubator.foreign.CLinker;
-
-import java.lang.*;
-
 public class Server extends Thread {
     int PortNum;
     NodeID NodeID;
@@ -31,8 +26,8 @@ public class Server extends Thread {
             while (true) {
                 Socket serverClient = server.accept(); // server accept the client connection request
                 SocketAddress remoteSocketAddress = serverClient.getRemoteSocketAddress();
-                String ClientIP = remoteSocketAddress.toString();
-                System.out.println(" >> " + "Client No:" + NodeID.getID() + " " + ClientIP + " started!");
+                String ClientIP = remoteSocketAddress.toString().substring(1,13);
+                System.out.println(" >> " + "Client No: " + reverseNodeInfo.get(ClientIP).getID() + " " + ClientIP + " started!");
                 if (reverseNodeInfo.get(ClientIP) == null) {
                     System.out.println("Client IP not found in our map");
                     throw NullPointerException;
