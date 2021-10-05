@@ -20,6 +20,10 @@ class Node {
 
 	private int numNode;
 
+	private Thread t;
+
+	private Server T1;
+
 	// constructor
 	public Node(NodeID identifier, String configFile, Listener listener) {
 		// Your code goes here
@@ -30,8 +34,9 @@ class Node {
 		fileParser(configFile);
 
 		// Start a listening server thread
-		Server T1 = new Server(this);
-		T1.start();
+		T1 = new Server(this);
+		t = new Thread(T1);
+		t.start();
 
 		Scanner sc = new Scanner(System.in);
 
@@ -173,6 +178,8 @@ class Node {
 				e.printStackTrace();
 			}
 		});
+
+		T1.stop();		
 	}
 
 	// Getter function for ID

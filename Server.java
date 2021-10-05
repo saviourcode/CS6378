@@ -1,6 +1,7 @@
 import java.net.*;
 import java.util.*;
-public class Server extends Thread {
+
+public class Server implements Runnable {
     int PortNum;
     NodeID NodeID;
     Node ServerNode;
@@ -8,6 +9,9 @@ public class Server extends Thread {
     private HashMap<Integer, List<String>> nodeInfo = new HashMap<>();
     private HashMap<String, NodeID> reverseNodeInfo = new HashMap<>();
     private Exception NullPointerException;
+    private boolean shouldStop = false;
+
+
 
     Server(Node ServerNode) {
         this.ServerNode = ServerNode;
@@ -19,25 +23,33 @@ public class Server extends Thread {
     }
 
     public void run() {
-
         try {
             ServerSocket server = new ServerSocket(this.PortNum);
+            server.setSoTimeout(1000);
             System.out.println("Server Started ....");
-            while (true) {
+            while (!shouldStop) {
                 Socket serverClient = server.accept(); // server accept the client connection request
                 SocketAddress remoteSocketAddress = serverClient.getRemoteSocketAddress();
                 String ClientIP = remoteSocketAddress.toString().substring(1,13);
                 System.out.println(" >> " + "Client No: " + reverseNodeInfo.get(ClientIP).getID() + " " + ClientIP + " started!");
                 if (reverseNodeInfo.get(ClientIP) == null) {
                     System.out.println("Client IP not found in our map");
-                    throw NullPointerException;
+                    // throw NullPointerException;
                 }
-                ClientHandler sct = new ClientHandler(serverClient, reverseNodeInfo.get(ClientIP), listener); // Send the request to seperate thread
-                sct.start();
+                else{
+                    ClientHandler sct = new ClientHandler(serverClient, reverseNodeInfo.get(ClientIP), listener); // Send the request to seperate thread
+                    sct.start();
+                }
+                
             }
 
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public void stop()
+    {
+        shouldStop = true;
     }
 }
