@@ -53,6 +53,9 @@ public class Server implements Runnable {
         } catch (Exception e) {
             System.out.println(e);
         }
+        NodeID[] neigbors = ServerNode.getNeighbors();
+        for(NodeID neighbor : neigbors)
+            listener.broken(neighbor);
     }
 
     public void stop() {
