@@ -25,10 +25,13 @@ class ClientHandler extends Thread {
                 Message msg = new Message(clientNodeID, data);
                 listener.receive(msg);
                 inStream.close();
-            } catch (Exception ex) {
+            } catch (java.net.SocketException ex) {
                 listener.broken(clientNodeID);
                 System.out.println(ex);
                 break;
+            }
+            catch (Exception ex){
+                continue;
             }
         }
         
