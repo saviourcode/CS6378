@@ -165,6 +165,7 @@ class Node {
 	}
 
 	public void tearDown() {
+		notifyAll();
 		neighborConn.forEach((neighborID, socket) -> {
 			try {
 				socket.close();
