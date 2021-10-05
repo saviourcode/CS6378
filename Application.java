@@ -94,6 +94,7 @@ class Application implements Listener
 			if(neighbor.getID() == neighbors[i].getID())
 			{
 				brokenNeighbors[i] = true;
+				System.out.println("Node ID: " + myID + " Neigh: " + neighbor.getID());
 				notifyAll();
 				if(!terminating)
 				{
