@@ -42,7 +42,7 @@ class Application implements Listener
 				//Set isRing to true and wakeup all waits using notifyAll()
 				isRing = true;
 				detectingRing = false;
-				System.out.println("Recieve Type 1, Node ID: " + myID);
+				System.out.println("Recieve Type 1, Node ID: " + myID.getID());
 				notifyAll();
 			}
 			else if(neighbors.length != 2)
@@ -74,7 +74,7 @@ class Application implements Listener
 				isRing = false;
 				detectingRing = false;
 				//Wakeup all processes that invoked wait()
-				System.out.println("Recieve Type 2, Node ID: " + myID);
+				System.out.println("Recieve Type 2, Node ID: " + myID.getID());
 				notifyAll();
 			}
 			else
@@ -96,7 +96,7 @@ class Application implements Listener
 			if(neighbor.getID() == neighbors[i].getID())
 			{
 				brokenNeighbors[i] = true;
-				System.out.println("Broken, Node ID: " + myID + " Neigh: " + neighbor.getID());
+				System.out.println("Broken, Node ID: " + myID.getID() + " Neigh: " + neighbor.getID());
 				notifyAll();
 				if(!terminating)
 				{
