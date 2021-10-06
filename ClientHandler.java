@@ -17,12 +17,10 @@ class ClientHandler extends Thread {
         while(true)
         {
             try {
-                DataInputStream inStream = new DataInputStream(serverClient.getInputStream());
-                byte[] data = new byte[100];
+                ObjectInputStream inStream = new ObjectInputStream(serverClient.getInputStream());
                 System.out.println("Waiting for data from the socket ...");
-                inStream.read(data);
-                System.out.println("Passed this block " + data);
-                Message msg = new Message(clientNodeID, data);
+                Message msg = (Message)inStream.readObject();
+                System.out.println("Passed this block " + msg);
                 listener.receive(msg);
                 inStream.close();
             } catch (java.net.SocketException ex) {

@@ -40,6 +40,7 @@ public class Server implements Runnable {
                         sct.start();
                     }
                 } catch (java.net.SocketTimeoutException e) {
+                    System.out.println("Socket Timed Out");
                     continue;
                 }
 

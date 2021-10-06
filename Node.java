@@ -39,7 +39,6 @@ class Node {
 		t.start();
 
 		Scanner sc = new Scanner(System.in);
-
 		sc.nextLine();
 
 		// create socket connections to the neighbour
@@ -151,8 +150,8 @@ class Node {
 		System.out.println("Going to send " + destination.getID() + " " + message.data);
 		Socket clientServer = neighborConn.get(destination.getID());
 		try {
-			OutputStream outStream = new DataOutputStream(clientServer.getOutputStream());
-			outStream.write(message.data);
+			ObjectOutputStream outStream = new ObjectOutputStream(clientServer.getOutputStream());
+			outStream.writeObject(message);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -177,7 +176,7 @@ class Node {
 			}
 		});
 
-		T1.stop();		
+		// T1.stop();		
 	}
 
 	// Getter function for ID
