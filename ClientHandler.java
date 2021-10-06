@@ -26,7 +26,8 @@ class ClientHandler extends Thread {
                 listener.receive(msg);
                 inStream.close();
             } catch (java.net.SocketException ex) {
-                System.out.println(ex + "calling broken Now");
+                System.out.println(ex);
+                System.out.println("Calling broken now");
                 listener.broken(clientNodeID);
                 break;
             }

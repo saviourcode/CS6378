@@ -23,7 +23,7 @@ public class Server implements Runnable {
     public void run() {
         try {
             ServerSocket server = new ServerSocket(this.PortNum);
-            server.setSoTimeout(1000);
+            // server.setSoTimeout(1000);
             System.out.println("Server Started ....");
             while (!shouldStop) {
                 try {

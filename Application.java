@@ -95,7 +95,7 @@ class Application implements Listener
 			if(neighbor.getID() == neighbors[i].getID())
 			{
 				brokenNeighbors[i] = true;
-				System.out.println("Socket with " + neighbor.getID() + " got closed");
+				System.out.println("Socket with " + neighbor.getID() + " got broken");
 				notifyAll();
 				if(!terminating)
 				{

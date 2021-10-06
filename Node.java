@@ -148,6 +148,7 @@ class Node {
 	}
 
 	public void send(Message message, NodeID destination) {
+		System.out.println("Going to send " + destination.getID() + " " + message.data);
 		Socket clientServer = neighborConn.get(destination.getID());
 		try {
 			OutputStream outStream = new DataOutputStream(clientServer.getOutputStream());
