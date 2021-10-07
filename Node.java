@@ -133,10 +133,16 @@ class Node {
 		for (NodeID neighbor : neighbors) {
 			String IPaddr = nodeInfo.get(neighbor.getID()).get(0);
 			int portNo = Integer.parseInt(nodeInfo.get(neighbor.getID()).get(1));
-			try {
-				neighborConn.put(neighbor.getID(), new Socket(IPaddr, portNo));
-			} catch (IOException e) {
-				e.printStackTrace();
+			boolean retry = true;
+			while (retry) {
+				try {
+					Socket sck = new Socket(IPaddr, portNo);
+					neighborConn.put(neighbor.getID(), sck);
+					retry = false;
+				} catch (Exception e) {
+					System.out.println("Retrying ...");
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -176,7 +182,7 @@ class Node {
 			}
 		});
 
-		// T1.stop();		
+		// T1.stop();
 	}
 
 	// Getter function for ID
