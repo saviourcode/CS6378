@@ -38,9 +38,6 @@ class Node {
 		t = new Thread(T1);
 		t.start();
 
-		Scanner sc = new Scanner(System.in);
-		sc.nextLine();
-
 		// create socket connections to the neighbour
 		createSocketConn();
 	}
@@ -140,14 +137,13 @@ class Node {
 					neighborConn.put(neighbor.getID(), sck);
 					retry = false;
 				} catch (Exception e) {
-					System.out.println("Retrying ...");
+					System.out.println("Retrying ... for Node " + neighbor.getID());
 					try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					e.printStackTrace();
 				}
 			}
 		}
