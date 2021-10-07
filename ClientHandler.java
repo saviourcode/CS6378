@@ -35,7 +35,8 @@ class ClientHandler extends Thread {
                 break;
             } catch (Exception ex) {
                 System.out.println(ex);
-                continue;
+                listener.broken(clientNodeID);
+                break;
             }
         }
 
