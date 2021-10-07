@@ -14,28 +14,21 @@ class ClientHandler extends Thread {
     }
 
     public void run() {
-        ObjectInputStream inStream;
-        try {
-            inStream = new ObjectInputStream(serverClient.getInputStream());
-            while (true) {
-                try {
-                    System.out.println("Waiting for data from the socket ...");
-                    Message msg = (Message) inStream.readObject();
-                    System.out.println("Passed this block " + msg);
-                    listener.receive(msg);
-                } catch (java.net.SocketException ex) {
-                    System.out.println(ex);
-                    System.out.println("Calling broken now");
-                    inStream.close();
-                    listener.broken(clientNodeID);
-                    break;
-                } catch (Exception ex) {
-                    continue;
-                }
+        while (true) {
+            try {
+                ObjectInputStream inStream = new ObjectInputStream(serverClient.getInputStream());
+                System.out.println("Waiting for data from the socket ...");
+                Message msg = (Message) inStream.readObject();
+                System.out.println("Passed this block " + msg);
+                listener.receive(msg);
+            } catch (java.net.SocketException ex) {
+                System.out.println(ex);
+                System.out.println("Calling broken now");
+                listener.broken(clientNodeID);
+                break;
+            } catch (Exception ex) {
+                continue;
             }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
 
     }
