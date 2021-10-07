@@ -28,6 +28,7 @@ public class Server implements Runnable {
             while (!shouldStop) {
                 try {
                     Socket serverClient = server.accept(); // server accept the client connection request
+                    serverClient.setKeepAlive(true);
                     SocketAddress remoteSocketAddress = serverClient.getRemoteSocketAddress();
                     String ClientIP = remoteSocketAddress.toString().substring(1, 13);
                     System.out.println(" >> " + "Client No: " + reverseNodeInfo.get(ClientIP).getID() + " " + ClientIP
