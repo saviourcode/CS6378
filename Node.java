@@ -147,7 +147,7 @@ class Node {
 	}
 
 	public void send(Message message, NodeID destination) {
-		System.out.println("Going to send " + destination.getID() + " " + message.data);
+		System.out.println("Node::send-> Going to send " + destination.getID() + " " + message.data);
 		Socket clientServer = neighborConn.get(destination.getID());
 		try {
 			ObjectOutputStream outStream = new ObjectOutputStream(clientServer.getOutputStream());

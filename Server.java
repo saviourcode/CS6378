@@ -24,24 +24,24 @@ public class Server implements Runnable {
         try {
             ServerSocket server = new ServerSocket(this.PortNum);
             // server.setSoTimeout(1000);
-            System.out.println("Server Started ....");
+            System.out.println("Server::run-> Server Started ....");
             while (!shouldStop) {
                 try {
                     Socket serverClient = server.accept(); // server accept the client connection request
                     serverClient.setKeepAlive(true);
                     SocketAddress remoteSocketAddress = serverClient.getRemoteSocketAddress();
                     String ClientIP = remoteSocketAddress.toString().substring(1, 13);
-                    System.out.println(" >> " + "Client No: " + reverseNodeInfo.get(ClientIP).getID() + " " + ClientIP
+                    System.out.println("Server::run-> >> " + "Client No: " + reverseNodeInfo.get(ClientIP).getID() + " " + ClientIP
                             + " started!");
                     if (reverseNodeInfo.get(ClientIP) == null) {
-                        System.out.println("Client IP not found in our map");
+                        System.out.println("Server::run-> Client IP not found in our map");
                         throw NullPointerException;
                     } else {
                         ClientHandler sct = new ClientHandler(serverClient, reverseNodeInfo.get(ClientIP), listener); 
                         sct.start();
                     }
                 } catch (java.net.SocketTimeoutException e) {
-                    System.out.println("Socket Timed Out");
+                    System.out.println("Server::run-> Socket Timed Out");
                     continue;
                 }
 

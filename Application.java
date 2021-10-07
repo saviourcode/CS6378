@@ -41,7 +41,7 @@ class Application implements Listener
 				//Set isRing to true and wakeup all waits using notifyAll()
 				isRing = true;
 				detectingRing = false;
-				System.out.println("Node 0 Confirmed it's a ring.");
+				System.out.println("App::Receive-> Node 0 Confirmed it's a ring.");
 				notifyAll();
 			}
 			else if(neighbors.length != 2)
@@ -73,7 +73,7 @@ class Application implements Listener
 				isRing = false;
 				detectingRing = false;
 				//Wakeup all processes that invoked wait()
-				System.out.println("Node 0 Confirmed it's not a ring.");
+				System.out.println("App::Receive-> Node 0 Confirmed it's not a ring.");
 				notifyAll();
 			}
 			else
@@ -84,7 +84,7 @@ class Application implements Listener
 				myNode.send(msg, pred);
 			}
 		}
-		System.out.println(p.messageType+" "+pred);	
+		System.out.println("App::Receive->" + p.messageType+" "+pred.getID());	
 	}
 	
 	//If communication is broken with one neighbor, tear down the node
@@ -95,7 +95,7 @@ class Application implements Listener
 			if(neighbor.getID() == neighbors[i].getID())
 			{
 				brokenNeighbors[i] = true;
-				System.out.println("Socket with " + neighbor.getID() + " got broken");
+				System.out.println("App::Broken-> Socket with " + neighbor.getID() + " got broken");
 				notifyAll();
 				if(!terminating)
 				{
@@ -122,7 +122,7 @@ class Application implements Listener
 		Payload p = new Payload(1);
 		Message msg = new Message(myID, p.toBytes());
 		myNode.send(msg, neighbors[0]);
-		System.out.println("Sent Success");	
+		System.out.println("App::detectRing-> Sent Success");	
 		while(detectingRing)
 		{
 			try
@@ -166,11 +166,11 @@ class Application implements Listener
 		{
 			if(detectRing())
 			{
-				System.out.println("Topology is a ring");
+				System.out.println("App::run-> Topology is a ring");
 			}
 			else
 			{
-				System.out.println("Topology is not a ring");
+				System.out.println("App::run-> Topology is not a ring");
 			}
 			myNode.tearDown();
 		}
@@ -181,9 +181,9 @@ class Application implements Listener
 				try
 				{
 					//wait till we get a broken reply from each neighbor
-				System.out.println("Before Wait");
+				System.out.println("App::run-> Before Wait");
 				wait();
-				System.out.println("After Wait");
+				System.out.println("App::run-> After Wait");
 				}
 				catch(InterruptedException ie)
 				{
