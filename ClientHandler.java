@@ -25,6 +25,12 @@ class ClientHandler extends Thread {
             } catch (java.net.SocketException ex) {
                 System.out.println(ex);
                 System.out.println("CH::run-> Calling broken now");
+                try {
+                    serverClient.setKeepAlive(false);
+                } catch (SocketException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 listener.broken(clientNodeID);
                 break;
             } catch (Exception ex) {
