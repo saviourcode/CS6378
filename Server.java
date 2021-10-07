@@ -37,6 +37,7 @@ public class Server implements Runnable {
                         System.out.println("Server::run-> Client IP not found in our map");
                         throw NullPointerException;
                     } else {
+                        System.out.println("Creating a ClientHandler Thread");
                         ClientHandler sct = new ClientHandler(serverClient, reverseNodeInfo.get(ClientIP), listener); 
                         sct.start();
                     }
