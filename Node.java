@@ -115,9 +115,8 @@ class Node {
 
 			// for (NodeID[] neigbor : neighborsList) {
 			// 	for (int i = 0; i < neigbor.length; i++) {
-			// 		System.out.print(neigbor[i].getID() + " ");
+			// 		System.out.println(neigbor[i].getID() + " ");
 			// 	}
-			// 	System.out.println();
 			// }
 
 		} catch (IOException e) {

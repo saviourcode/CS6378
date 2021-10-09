@@ -33,7 +33,7 @@ public class Server implements Runnable {
                     String ClientIP = remoteSocketAddress.toString().substring(1, 13);
                     // System.out.println("Server::run-> >> " + "Client No: " + reverseNodeInfo.get(ClientIP).getID() + " " + ClientIP + " started!");
                     if (reverseNodeInfo.get(ClientIP) == null) {
-                        System.out.println("Server::run-> Client IP not found in our map");
+                        System.out.println("Server::run-> Client IP not found in our map, Please re-run");
                         throw NullPointerException;
                     } else {
                         // System.out.println("Creating a ClientHandler Thread");
