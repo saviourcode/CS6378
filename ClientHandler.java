@@ -17,14 +17,14 @@ class ClientHandler extends Thread {
         while (true) {
             try {
                 ObjectInputStream inStream = new ObjectInputStream(serverClient.getInputStream());
-                System.out.println("CH::run-> Waiting for data from the socket ...");
+                // System.out.println("CH::run-> Waiting for data from the socket ...");
                 Message msg = (Message) inStream.readObject();
                 Payload p = Payload.getPayload(msg.data);
-                System.out.println("CH::run-> Passed this block " + p.messageType);
+                // System.out.println("CH::run-> Passed this block " + p.messageType);
                 listener.receive(msg);
             } catch (java.net.SocketException ex) {
-                System.out.println(ex);
-                System.out.println("CH::run-> Calling broken now");
+                // System.out.println(ex);
+                // System.out.println("CH::run-> Calling broken now");
                 try {
                     serverClient.setKeepAlive(false);
                 } catch (SocketException e) {
@@ -34,7 +34,7 @@ class ClientHandler extends Thread {
                 listener.broken(clientNodeID);
                 break;
             } catch (Exception ex) {
-                System.out.println(ex);
+                // System.out.println(ex);
                 listener.broken(clientNodeID);
                 break;
             }

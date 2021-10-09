@@ -85,7 +85,7 @@ class Node {
 			line = skipInvalidLines(br);
 			// Parse the valid num of nodes line
 			numNode = Integer.parseInt(line);
-			System.out.println(numNode);
+			// System.out.println(numNode);
 			// Find the key-value pair of the nodes by skipping invalid line
 			line = skipInvalidLines(br);
 			// Parse the valid key-value pair of nodes
@@ -99,7 +99,7 @@ class Node {
 				reverseNodeInfo.put(convertHostToIP(tokens[1]), new NodeID(Integer.parseInt(tokens[0])));
 			} while ((--count_of_lines) != 0 && ((line = cleanLine(br.readLine())) != null));
 
-			nodeInfo.forEach((key, value) -> System.out.println(key + " " + value.get(0) + " " + value.get(1)));
+			// nodeInfo.forEach((key, value) -> System.out.println(key + " " + value.get(0) + " " + value.get(1)));
 
 			// Find the neighbour array by skipping invalid line
 			line = skipInvalidLines(br);
@@ -113,12 +113,12 @@ class Node {
 				neighborsList.add(numNode - count_of_lines, neighborNode);
 			} while ((--count_of_lines) != 0 && ((line = cleanLine(br.readLine())) != null));
 
-			for (NodeID[] neigbor : neighborsList) {
-				for (int i = 0; i < neigbor.length; i++) {
-					System.out.print(neigbor[i].getID() + " ");
-				}
-				System.out.println();
-			}
+			// for (NodeID[] neigbor : neighborsList) {
+			// 	for (int i = 0; i < neigbor.length; i++) {
+			// 		System.out.print(neigbor[i].getID() + " ");
+			// 	}
+			// 	System.out.println();
+			// }
 		} catch (IOException e) {
 			System.out.println("File not found");
 		}
@@ -155,7 +155,7 @@ class Node {
 	}
 
 	public void send(Message message, NodeID destination) {
-		System.out.println("Node::send-> Going to send " + destination.getID() + " " + message.data);
+		//System.out.println("Node::send-> Going to send " + destination.getID() + " " + message.data);
 		Socket clientServer = neighborConn.get(destination.getID());
 		try {
 			ObjectOutputStream outStream = new ObjectOutputStream(clientServer.getOutputStream());
