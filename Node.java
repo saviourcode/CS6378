@@ -184,7 +184,7 @@ class Node {
 			}
 		});
 
-		// T1.stop();
+		T1.stop();
 	}
 
 	// Getter function for ID
