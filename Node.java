@@ -62,7 +62,7 @@ class Node {
 		String line = "";
 		try {
 			while (((line = cleanLine(br.readLine())) != null) && (!IsInt_ByException(line))) {
-				System.out.println(line + " " + IsInt_ByException(line));
+				// System.out.println(line + " " + IsInt_ByException(line));
 			}
 			return line;
 		} catch (IOException e) {
@@ -119,6 +119,7 @@ class Node {
 			// 	}
 			// 	System.out.println();
 			// }
+
 		} catch (IOException e) {
 			System.out.println("File not found");
 		}
@@ -137,7 +138,7 @@ class Node {
 					neighborConn.put(neighbor.getID(), sck);
 					retry = false;
 				} catch (Exception e) {
-					System.out.println("Retrying ... for Node " + neighbor.getID());
+					// System.out.println("Retrying ... for Node " + neighbor.getID());
 					try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e1) {
