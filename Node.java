@@ -10,18 +10,26 @@ class Node {
 
 	private Listener listener;
 
+	// Local variable to store the adjacent list of the neighbours
 	private List<NodeID[]> neighborsList = new ArrayList<NodeID[]>();
 
+
+	// Map to store the nodeID as key and Hostname and Portnumber as Value
 	private HashMap<Integer, List<String>> nodeInfo = new HashMap<>();
 
+	// Reverse Map to store the Hostname and the NodeID
 	private HashMap<String, NodeID> reverseNodeInfo = new HashMap<>();
 
+	// Map to store the NodeID and Socket Connection
 	private HashMap<Integer, Socket> neighborConn = new HashMap<>();
 
+	// Local variable to store the number of nodes
 	private int numNode;
 
+	// Local variable to store the reference of the thread
 	private Thread t;
 
+	// Server Class object reference
 	private Server T1;
 
 	// constructor
@@ -42,10 +50,12 @@ class Node {
 		createSocketConn();
 	}
 
+	// Helper function the remove the part after the comments
 	private String cleanLine(String line) {
 		return (line.substring(0, line.indexOf("#") == -1 ? line.length() : line.indexOf("#")).trim());
 	}
 
+	// Helper function to check if the given lines contains a integer or not, or if the first digit in the line is number or not.
 	private boolean IsInt_ByException(String str) {
 		try {
 			Integer.parseInt(str);
@@ -58,6 +68,7 @@ class Node {
 		}
 	}
 
+	// Helper function to skipInvalidLines by checking if the first character is number or not.
 	private String skipInvalidLines(BufferedReader br) {
 		String line = "";
 		try {
@@ -71,10 +82,12 @@ class Node {
 		}
 	}
 
+	// Helper function to convert the Host name to the IP address
 	private String convertHostToIP(String token) {
 		return "10.176.69" + "." + Integer.toString(31 + Integer.parseInt(token.substring(2, 4)));
 	}
 
+	// Helper function to parse the configuration file
 	private void fileParser(String configFile) {
 		File file = new File(configFile);
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -124,6 +137,7 @@ class Node {
 		}
 	}
 
+	// Helper to create the socket among the neighbour and keep on retrying if the socket couldn't be formed
 	private void createSocketConn() {
 		NodeID[] neighbors = getNeighbors();
 
@@ -192,14 +206,17 @@ class Node {
 		return identifier;
 	}
 
+	// Getter function for NodeInfo
 	public HashMap<Integer, List<String>> getNodeInfo() {
 		return nodeInfo;
 	}
 
+	// Getter function for ReverseNodeInfo
 	public HashMap<String, NodeID> getReverseNodeInfo() {
 		return reverseNodeInfo;
 	}
 
+	// Getter function for listener object
 	public Listener getListener() {
 		return listener;
 	}
