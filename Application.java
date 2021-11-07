@@ -11,6 +11,7 @@ class Application implements Listener {
 
     // Node ids of my neighbors
     NodeID[] neighbors;
+	int num_neighbors;
 
     // Flag to check if connection to neighbors[i] has been broken
     boolean[] brokenNeighbors;
@@ -40,6 +41,8 @@ class Application implements Listener {
 		for(int i = 0; i < neigbh_rt.size(); i++)
 			System.out.print(neigbh_rt.get(i) + " ");
 
+		System.out.println();
+
         for (int j = 0; j < rt.get(hop + 1).size(); j++) {
             st.add(rt.get(hop + 1).get(j));
         }
@@ -59,9 +62,10 @@ class Application implements Listener {
         myNode.setRoutingTable(rt);
 
         count++;
-        if (count == myNode.getNumNodes()) {
+        if (count == num_neighbors) {
             //send_next = true;
             count = 0;
+			System.out.println("I Notified All");
 			notifyAll();
         }
     }
@@ -76,8 +80,9 @@ class Application implements Listener {
     public synchronized void run() {
         // Construct node
         myNode = new Node(myID, configFile, this);
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         neighbors = myNode.getNeighbors();
+
+		num_neighbors = neighbors.length;
 
         List<List<Integer>> rt = new ArrayList<List<Integer>>();
 
@@ -103,17 +108,17 @@ class Application implements Listener {
         terminating = false;
 
         for (int i = 0; i < numNode - 1; i++) {
-			System.out.println(i);
+			System.out.println("Going to send for hop: " + i);
             Payload p = new Payload(rt.get(i), i);
             Message msg = new Message(myNode.getNodeID(), p.toBytes());
             myNode.sendToAll(msg);
-			List<List<Integer>> myRt = myNode.getRoutingTable();
-            for (int k = 0; k < myRt.size(); k++) {
-                for (int j = 0; j < myRt.get(k).size(); j++) {
-                        System.out.print(myRt.get(k).get(j) + " ");
-                }
-                System.out.println();
-            }
+			// List<List<Integer>> myRt = myNode.getRoutingTable();
+            // for (int k = 0; k < myRt.size(); k++) {
+            //     for (int j = 0; j < myRt.get(k).size(); j++) {
+            //             System.out.print(myRt.get(k).get(j) + " ");
+            //     }
+            //     System.out.println();
+            // }
             // send_next = false;
             // while (send_next == false) {
             //     continue;
