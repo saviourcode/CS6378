@@ -65,6 +65,7 @@ class Application implements Listener {
     public synchronized void run() {
         // Construct node
         myNode = new Node(myID, configFile, this);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         neighbors = myNode.getNeighbors();
 
         List<List<Integer>> rt = new ArrayList<List<Integer>>();
