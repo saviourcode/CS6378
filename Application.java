@@ -90,7 +90,7 @@ class Application implements Listener {
             nodeID.add(neighbors[i].getID());
         }
 
-        rt.add(nodeID);
+        rt.set(0, nodeID);
         myNode.setRoutingTable(rt);
 
         brokenNeighbors = new boolean[neighbors.length];
