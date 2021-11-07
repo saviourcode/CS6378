@@ -58,7 +58,7 @@ class Application implements Listener {
 
 			System.out.println();
 
-			for (int i = 0; i < neigbh_rt.size() - 1; i++) {
+			for (int i = 0; i < neigbh_rt.size(); i++) {
 				if (!st.contains(neigbh_rt.get(i))) {
 					rt.get(hop + 1).add(neigbh_rt.get(i));
 					st.add(neigbh_rt.get(i));
