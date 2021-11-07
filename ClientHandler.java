@@ -27,7 +27,7 @@ class ClientHandler extends Thread {
                 Message msg = (Message) inStream.readObject();
                 // Convert it into the payload and get the data and source ID
                 Payload p = Payload.getPayload(msg.data);
-                System.out.println("CH::run-> Passed this block " + p.getHop());
+                System.out.println("CH::run-> Hop Number " + p.getHop());
                 List<Integer> rt = p.getRoutingTable();
                 for(int i = 0; i< rt.size(); i++ )
                 {
