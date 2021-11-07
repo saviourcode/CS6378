@@ -35,6 +35,10 @@ class Application implements Listener {
         List<List<Integer>> rt = myNode.getRoutingTable();
         HashSet<Integer> st = new HashSet<>();
 
+		System.out.println("Neighbour RT");
+		for(int i = 0; i < neigbh_rt.size(); i++)
+			System.out.print(neigbh_rt.get(i) + " ");
+
         for (int j = 0; j < rt.get(hop + 1).size(); j++) {
             st.add(rt.get(hop + 1).get(j));
         }
@@ -46,6 +50,10 @@ class Application implements Listener {
             }
 
         }
+
+		System.out.println("My RT");
+		for(int i = 0; i < rt.get(hop+1).size(); i++)
+			System.out.print(rt.get(hop+1).get(i) + " ");
 
         myNode.setRoutingTable(rt);
 
