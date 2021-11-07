@@ -51,12 +51,13 @@ class Application implements Listener {
             if (!st.contains(neigbh_rt.get(i))) {
                 rt.get(hop + 1).add(neigbh_rt.get(i));
             }
-
         }
 
 		System.out.println("My RT");
 		for(int i = 0; i < rt.get(hop+1).size(); i++)
 			System.out.print(rt.get(hop+1).get(i) + " ");
+
+		System.out.println();
 
         myNode.setRoutingTable(rt);
 
