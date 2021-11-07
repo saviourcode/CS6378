@@ -46,9 +46,8 @@ class Application implements Listener {
         for (int j = 0; j < rt.get(hop + 1).size(); j++) {
             st.add(rt.get(hop + 1).get(j));
         }
-
+		st.add(myID.getID());
         for (int i = 0; i < neigbh_rt.size() - 1; i++) {
-
             if (!st.contains(neigbh_rt.get(i))) {
                 rt.get(hop + 1).add(neigbh_rt.get(i));
             }
