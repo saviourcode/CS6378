@@ -3,6 +3,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.*;
 
 //Payload needs to be serializable in order to convert it to byte array
 class Payload implements java.io.Serializable
@@ -10,10 +11,19 @@ class Payload implements java.io.Serializable
 	//Payload may be configured as per the need of the application
 	int messageType;
 
+	List<Integer> routingTable = new ArrayList<>();
+	int hop;
+
 	//Constructor
 	public Payload(int m)
 	{
 		messageType = m;
+	}
+
+	public Payload(List<Integer> rt, int hop)
+	{
+		this.routingTable = rt;
+		this.hop = hop;
 	}
 
 	//Method to convert an instance of payload to a byte array
@@ -77,5 +87,16 @@ class Payload implements java.io.Serializable
 			}
 		}
 		return p;
+	}
+	
+
+	public List<Integer> getRoutingTable()
+	{
+		return routingTable;
+	}
+
+	public int getHop()
+	{
+		return hop;
 	}
 }

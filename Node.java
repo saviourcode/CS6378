@@ -13,7 +13,7 @@ class Node {
 	// Local variable to store the adjacent list of the neighbours
 	private List<NodeID[]> neighborsList = new ArrayList<NodeID[]>();
 
-
+	private List<List<Integer>> routingTable = new ArrayList<>();
 	// Map to store the nodeID as key and Hostname and Portnumber as Value
 	private HashMap<Integer, List<String>> nodeInfo = new HashMap<>();
 
@@ -201,9 +201,19 @@ class Node {
 		T1.stop();
 	}
 
+	public void setRoutingTable(List<List<Integer>> recRT)
+	{
+		this.routingTable = recRT;
+	}
+
 	// Getter function for ID
 	public NodeID getNodeID() {
 		return identifier;
+	}
+
+	// Getter function for ID
+	public int getNumNodes() {
+		return numNode;
 	}
 
 	// Getter function for NodeInfo
@@ -214,6 +224,11 @@ class Node {
 	// Getter function for ReverseNodeInfo
 	public HashMap<String, NodeID> getReverseNodeInfo() {
 		return reverseNodeInfo;
+	}
+
+	// Getter function for Routing Table
+	public List<List<Integer>> getRoutingTable() {
+		return routingTable;
 	}
 
 	// Getter function for listener object
