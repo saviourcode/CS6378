@@ -27,6 +27,7 @@ class Application implements Listener {
     // synchronized receive
     // invoked by Node class when it receives a message
     public synchronized void receive(Message message) {
+		System.out.println("Received Function Called");
         Payload p = Payload.getPayload(message.data);
 
         List<Integer> neigbh_rt = p.getRoutingTable();
