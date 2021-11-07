@@ -168,15 +168,7 @@ class Node {
 		return neighborsList.get(identifier.getID());
 	}
 
-	public void send(Message message, NodeID destination) {
-		Payload p = Payload.getPayload(message.data);
-		List<Integer> neigbh_rt = p.getRoutingTable();
-		int hop = p.getHop();
-		
-		System.out.println(hop + " Neighbour RT");
-		for(int i = 0; i < neigbh_rt.size(); i++)
-			System.out.print(neigbh_rt.get(i) + " ");
-			
+	public void send(Message message, NodeID destination) {	
 		System.out.println("Node::send-> Going to send " + destination.getID() + " " + message.data);
 		Socket clientServer = neighborConn.get(destination.getID());
 		try {

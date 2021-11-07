@@ -29,7 +29,6 @@ class Application implements Listener {
     // invoked by Node class when it receives a message
     public synchronized void receive(Message message) {
 		System.out.println("Received Function Called");
-		System.out.flush();
         Payload p = Payload.getPayload(message.data);
 
         List<Integer> neigbh_rt = p.getRoutingTable();
@@ -55,8 +54,12 @@ class Application implements Listener {
         }
 
 		System.out.println("My RT");
-		for(int i = 0; i < rt.get(hop+1).size(); i++)
-			System.out.print(rt.get(hop+1).get(i) + " ");
+		for(int i = 0; i < rt.size(); i++)
+		{
+			for(int j = 0; j < rt.get(i).size(); j++)
+				System.out.print(rt.get(i).get(j) + " ");
+		}
+			
 
 		System.out.println();
 
