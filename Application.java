@@ -132,10 +132,10 @@ class Application implements Listener {
         }
 
         try {
-            File myObj = new File(myID + "filename.txt");
+            File myObj = new File(myID.getID() + "filename.txt");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
-                FileWriter myWriter = new FileWriter(myID + "filename.txt");
+                FileWriter myWriter = new FileWriter(myID.getID() + "filename.txt");
                 List<List<Integer>> myRt = myNode.getRoutingTable();
                 for (int i = 0; i < myRt.size(); i++) {
                     myWriter.write(i + ": ");
