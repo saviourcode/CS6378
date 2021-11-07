@@ -51,7 +51,6 @@ class Application implements Listener {
 			List<Integer> neigbh_rt = p.getRoutingTable();
 			int hop = p.getHop();
 			List<List<Integer>> rt = myNode.getRoutingTable();
-			
 
 			System.out.println("Neighbour RT");
 			for (int i = 0; i < neigbh_rt.size(); i++)
@@ -59,8 +58,6 @@ class Application implements Listener {
 
 			System.out.println();
 
-			
-			
 			for (int i = 0; i < neigbh_rt.size() - 1; i++) {
 				if (!st.contains(neigbh_rt.get(i))) {
 					rt.get(hop + 1).add(neigbh_rt.get(i));
@@ -125,13 +122,7 @@ class Application implements Listener {
 			Payload p = new Payload(rt.get(i), i);
 			Message msg = new Message(myNode.getNodeID(), p.toBytes());
 			myNode.sendToAll(msg);
-			// List<List<Integer>> myRt = myNode.getRoutingTable();
-			// for (int k = 0; k < myRt.size(); k++) {
-			// for (int j = 0; j < myRt.get(k).size(); j++) {
-			// System.out.print(myRt.get(k).get(j) + " ");
-			// }
-			// System.out.println();
-			// }
+			//
 			// send_next = false;
 			// while (send_next == false) {
 			// continue;
@@ -139,6 +130,14 @@ class Application implements Listener {
 			try {
 				wait();
 				buildRoutingTable();
+				System.out.println("Final RT");
+				List<List<Integer>> myRt = myNode.getRoutingTable();
+				for (int k = 0; k < myRt.size(); k++) {
+					for (int j = 0; j < myRt.get(k).size(); j++) {
+						System.out.print(myRt.get(k).get(j) + " ");
+					}
+					System.out.println();
+				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
