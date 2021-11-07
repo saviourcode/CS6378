@@ -6,7 +6,7 @@ class Application implements Listener {
     Node myNode;
     NodeID myID;
 
-    boolean send_next = true;
+   // boolean send_next = true;
     int count = 0;
 
     // Node ids of my neighbors
@@ -60,8 +60,9 @@ class Application implements Listener {
 
         count++;
         if (count == myNode.getNumNodes()) {
-            send_next = true;
+            //send_next = true;
             count = 0;
+			notifyAll();
         }
     }
 
@@ -113,10 +114,16 @@ class Application implements Listener {
                 }
                 System.out.println();
             }
-            send_next = false;
-            while (send_next == false) {
-                continue;
-            }
+            // send_next = false;
+            // while (send_next == false) {
+            //     continue;
+            // }
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
 
         try {
