@@ -28,6 +28,7 @@ class Application implements Listener {
     // invoked by Node class when it receives a message
     public synchronized void receive(Message message) {
 		System.out.println("Received Function Called");
+		System.out.flush();
         Payload p = Payload.getPayload(message.data);
 
         List<Integer> neigbh_rt = p.getRoutingTable();
@@ -105,13 +106,13 @@ class Application implements Listener {
             Payload p = new Payload(rt.get(i), i);
             Message msg = new Message(myNode.getNodeID(), p.toBytes());
             myNode.sendToAll(msg);
-			List<List<Integer>> myRt = myNode.getRoutingTable();
-            for (int k = 0; k < myRt.size(); k++) {
-                for (int j = 0; j < myRt.get(k).size(); j++) {
-                        System.out.print(myRt.get(k).get(j) + " ");
-                }
-                System.out.println();
-            }
+			// List<List<Integer>> myRt = myNode.getRoutingTable();
+            // for (int k = 0; k < myRt.size(); k++) {
+            //     for (int j = 0; j < myRt.get(k).size(); j++) {
+            //             System.out.print(myRt.get(k).get(j) + " ");
+            //     }
+            //     System.out.println();
+            // }
             send_next = false;
             while (send_next == false) {
                 continue;
