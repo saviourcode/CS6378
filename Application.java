@@ -58,10 +58,8 @@ class Application implements Listener {
 		{
 			for(int j = 0; j < rt.get(i).size(); j++)
 				System.out.print(rt.get(i).get(j) + " ");
+			System.out.println();
 		}
-			
-
-		System.out.println();
 
         myNode.setRoutingTable(rt);
 
