@@ -107,7 +107,7 @@ class Application implements Listener {
             myNode.sendToAll(msg);
 			List<List<Integer>> myRt = myNode.getRoutingTable();
             for (int k = 0; k < myRt.size(); k++) {
-                for (int j = 0; j < myRt.get(i).size(); j++) {
+                for (int j = 0; j < myRt.get(k).size(); j++) {
                         System.out.print(myRt.get(k).get(j) + " ");
                 }
                 System.out.println();
