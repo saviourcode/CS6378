@@ -43,8 +43,9 @@ class Application implements Listener {
 
 		System.out.println();
 
-        for (int j = 0; j < rt.get(hop + 1).size(); j++) {
-            st.add(rt.get(hop + 1).get(j));
+        for (int i = 0; i <= hop; i++) {
+			for(int j = 0; j < rt.get(i).size(); j++)
+            	st.add(rt.get(i).get(j));
         }
 		st.add(myID.getID());
         for (int i = 0; i < neigbh_rt.size() - 1; i++) {
@@ -138,7 +139,7 @@ class Application implements Listener {
                 FileWriter myWriter = new FileWriter(myID.getID() + "filename.txt");
                 List<List<Integer>> myRt = myNode.getRoutingTable();
                 for (int i = 0; i < myRt.size(); i++) {
-                    myWriter.write(i + ": ");
+                    myWriter.write(i+1 + ": ");
                     for (int j = 0; j < myRt.get(i).size(); j++) {
                         myWriter.write(myRt.get(i).get(j) + " ");
                     }
