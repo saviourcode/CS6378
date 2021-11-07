@@ -31,7 +31,7 @@ public class Server implements Runnable {
             // Create a listening socket with a timeout of 1000ms
             ServerSocket server = new ServerSocket(this.PortNum);
             server.setSoTimeout(1000);
-            // System.out.println("Server::run-> Server Started ....");
+            System.out.println("Server::run-> Server Started ....");
             while (!shouldStop) {
                 try {
                     // Wait for client socket to join in
@@ -40,19 +40,19 @@ public class Server implements Runnable {
                     serverClient.setKeepAlive(true);
                     SocketAddress remoteSocketAddress = serverClient.getRemoteSocketAddress();
                     String ClientIP = remoteSocketAddress.toString().substring(1, 13);
-                    // System.out.println("Server::run-> >> " + "Client No: " + reverseNodeInfo.get(ClientIP).getID() + " " + ClientIP + " started!");
+                    System.out.println("Server::run-> >> " + "Client No: " + reverseNodeInfo.get(ClientIP).getID() + " " + ClientIP + " started!");
                     // Check if that reverseNodeInfo IP address exists in the reverseNodeInfo map or not
                     if (reverseNodeInfo.get(ClientIP) == null) {
                         System.out.println("Server::run-> Client IP not found in our map, Please re-run");
                         throw NullPointerException;
                     } else {
-                        // System.out.println("Creating a ClientHandler Thread");
+                        System.out.println("Creating a ClientHandler Thread");
                         // Create a seperate ClientHandler thread for the just created socket
                         ClientHandler sct = new ClientHandler(serverClient, reverseNodeInfo.get(ClientIP), listener); 
                         sct.start();
                     }
                 } catch (java.net.SocketTimeoutException e) {
-                    // System.out.println("Server::run-> Socket Timed Out");
+                    System.out.println("Server::run-> Socket Timed Out");
                     continue;
                 }
 

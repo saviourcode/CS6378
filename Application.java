@@ -91,9 +91,17 @@ class Application implements Listener {
         terminating = false;
 
         for (int i = 0; i < numNode - 1; i++) {
+			System.out.println(i);
             Payload p = new Payload(rt.get(i), i);
             Message msg = new Message(myNode.getNodeID(), p.toBytes());
             myNode.sendToAll(msg);
+			List<List<Integer>> myRt = myNode.getRoutingTable();
+            for (int k = 0; k < myRt.size(); k++) {
+                for (int j = 0; j < myRt.get(i).size(); j++) {
+                        System.out.print(myRt.get(k).get(j) + " ");
+                }
+                System.out.println();
+            }
             send_next = false;
             while (send_next == false) {
                 continue;

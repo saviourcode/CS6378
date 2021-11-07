@@ -151,7 +151,7 @@ class Node {
 					neighborConn.put(neighbor.getID(), sck);
 					retry = false;
 				} catch (Exception e) {
-					// System.out.println("Retrying ... for Node " + neighbor.getID());
+					System.out.println("Retrying ... for Node " + neighbor.getID());
 					try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e1) {
@@ -169,7 +169,7 @@ class Node {
 	}
 
 	public void send(Message message, NodeID destination) {
-		//System.out.println("Node::send-> Going to send " + destination.getID() + " " + message.data);
+		System.out.println("Node::send-> Going to send " + destination.getID() + " " + message.data);
 		Socket clientServer = neighborConn.get(destination.getID());
 		try {
 			ObjectOutputStream outStream = new ObjectOutputStream(clientServer.getOutputStream());
