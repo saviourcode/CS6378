@@ -25,8 +25,23 @@ class Application implements Listener {
 
 	String configFile;
 
-	// If communication is broken with one neighbor, tear down the node
-	public synchronized void broken(NodeID neighbor) {
+	//If communication is broken with one neighbor, tear down the node
+	public synchronized void broken(NodeID neighbor)
+	{
+		for(int i = 0; i < neighbors.length; i++)
+		{
+			if(neighbor.getID() == neighbors[i].getID())
+			{
+				brokenNeighbors[i] = true;
+				notifyAll();
+				if(!terminating)
+				{
+					terminating = true;
+					myNode.tearDown();
+				}
+				return;
+			}
+		}
 	}
 
 	// synchronized receive
@@ -121,11 +136,7 @@ class Application implements Listener {
 			Payload p = new Payload(rt.get(round), round);
 			Message msg = new Message(myNode.getNodeID(), p.toBytes());
 			myNode.sendToAll(msg);
-			//
-			// send_next = false;
-			// while (send_next == false) {
-			// continue;
-			// }
+			
 			try {
 				wait();
 				buildRoutingTable();
@@ -138,7 +149,6 @@ class Application implements Listener {
 					System.out.println();
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -166,19 +176,26 @@ class Application implements Listener {
 			e.printStackTrace();
 		}
 
-		// for(int i = 0; i < 100; i++)
+        // if(myID.getID() == 0)
 		// {
-		// sleep(1);
+        //     myNode.tearDown();
+        // }
+
+        // for(int i = 0; i < neighbors.length; i++)
+		// {
+		// 	while(!brokenNeighbors[i])
+		// 	{
+		// 		try
+		// 		{
+		// 			//wait till we get a broken reply from each neighbor
+		// 			wait();
+		// 		}
+		// 		catch(InterruptedException ie)
+		// 		{
+		// 		}
+		// 	}
 		// }
 
-		for (int i = 0; i < neighbors.length; i++) {
-			while (!brokenNeighbors[i]) {
-				try {
-					// wait till we get a broken reply from each neighbor
-					wait();
-				} catch (InterruptedException ie) {
-				}
-			}
-		}
+        myNode.tearDown();
 	}
 }
