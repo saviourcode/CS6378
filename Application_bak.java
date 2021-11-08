@@ -1,20 +1,19 @@
 import java.util.*;
 import java.io.*;
 
-class Application implements Listener {
+class Application_bak implements Listener {
 
 	Node myNode;
 	NodeID myID;
 
+	// boolean send_next = true;
 	int count = 0;
-
-    int round = 0;
 
 	// Node ids of my neighbors
 	NodeID[] neighbors;
 	int num_neighbors;
 
-	HashMap<Integer, List<Payload>> buffer = new HashMap<>();
+	List<Message> buffer = new ArrayList<>();
 	HashSet<Integer> st = new HashSet<>();
 
 	// Flag to check if connection to neighbors[i] has been broken
@@ -34,19 +33,20 @@ class Application implements Listener {
 	public synchronized void receive(Message message) {
 		System.out.println("Received Function Called");
 
-		Payload p = Payload.getPayload(message.data);
+		buffer.add(message);
 
-        buffer.computeIfAbsent(p.getHop(), k -> new ArrayList<>()).add(p);
-
-		if (buffer.get(round).size() == num_neighbors) {
+		count++;
+		if (count == num_neighbors) {
+			// send_next = true;
+			count = 0;
 			System.out.println("I Notified All");
 			notifyAll();
 		}
 	}
 
 	public void buildRoutingTable() {
-		for (int k = 0; k < num_neighbors; k++) {
-			Payload p = buffer.get(round).get(k);
+		for (int k = 0; k < buffer.size(); k++) {
+			Payload p = Payload.getPayload(buffer.get(k).data);
 
 			List<Integer> neigbh_rt = p.getRoutingTable();
 			int hop = p.getHop();
@@ -74,10 +74,13 @@ class Application implements Listener {
 
 			myNode.setRoutingTable(rt);
 		}
+
+		buffer.clear();
+
 	}
 
 	// Constructor
-	public Application(NodeID identifier, String configFile) {
+	public Application_bak(NodeID identifier, String configFile) {
 		myID = identifier;
 		this.configFile = configFile;
 	}
@@ -116,9 +119,9 @@ class Application implements Listener {
 
 		terminating = false;
 		
-		for (round = 0; round < numNode - 1; round++) {
-			System.out.println("Going to send for hop: " + round);
-			Payload p = new Payload(rt.get(round), round);
+		for (int i = 0; i < numNode - 1; i++) {
+			System.out.println("Going to send for hop: " + i);
+			Payload p = new Payload(rt.get(i), i);
 			Message msg = new Message(myNode.getNodeID(), p.toBytes());
 			myNode.sendToAll(msg);
 			//

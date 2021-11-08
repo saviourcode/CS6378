@@ -7,7 +7,7 @@ public class Main
 		String configFile = args[1];
 		
 		//Launch application and wait for it to terminate
-		Application myApp = new Application(id, configFile);
+		Application_bak myApp = new Application_bak(id, configFile);
 		myApp.run();	
 	}
 }
