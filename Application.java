@@ -52,7 +52,7 @@ class Application implements Listener {
 			int hop = p.getHop();
 			List<List<Integer>> rt = myNode.getRoutingTable();
 
-			System.out.println("Neighbour RT");
+			System.out.println("Neighbour RT for hop: " + hop);
 			for (int i = 0; i < neigbh_rt.size(); i++)
 				System.out.print(neigbh_rt.get(i) + " ");
 
