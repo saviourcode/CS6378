@@ -86,12 +86,9 @@ class Application implements Listener {
         numNode = myNode.getNumNodes();
         num_neighbors = neighbors.length;
 
-        List<List<Integer>> rt = new ArrayList<List<Integer>>(numNode);
-
-        // for (int i = 0; i < numNode; i++) {
-        //     List<Integer> temp = new ArrayList<>();
-        //     rt.add(temp);
-        // }
+        List<List<Integer>> rt = new ArrayList<List<Integer>>();
+        for (int i = 0; i < numNode; i++)
+            rt.add(new ArrayList<>());
 
         List<Integer> nodeID = new ArrayList<>();
         for (int i = 0; i < neighbors.length; i++) {
