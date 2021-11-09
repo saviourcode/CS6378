@@ -13,7 +13,8 @@ class Node {
 	// Local variable to store the adjacent list of the neighbours
 	private List<NodeID[]> neighborsList = new ArrayList<NodeID[]>();
 
-	private List<List<Integer>> routingTable = new ArrayList<>();
+	private List<List<Integer>> routingTable;
+
 	// Map to store the nodeID as key and Hostname and Portnumber as Value
 	private HashMap<Integer, List<String>> nodeInfo = new HashMap<>();
 
