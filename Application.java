@@ -95,7 +95,7 @@ class Application implements Listener {
         numNode = myNode.getNumNodes();
         num_neighbors = neighbors.length;
 
-        recvData = new boolean[numNode-1][num_neighbors];
+        recvData = new boolean[numNode][numNode];
 
         List<List<Integer>> rt = new ArrayList<List<Integer>>();
         for (int i = 0; i < numNode; i++)
