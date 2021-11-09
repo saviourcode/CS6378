@@ -10,6 +10,11 @@ class Application implements Listener {
 
     int round = 0;
 
+    boolean terminating;
+
+    //Flag to check if connection to neighbors[i] has been broken
+	boolean[] brokenNeighbors;
+
     NodeID[] neighbors;
     int num_neighbors;
     int numNode;
@@ -20,10 +25,24 @@ class Application implements Listener {
 
     String configFile;
 
-    // If communication is broken with one neighbor, tear down the node
-    public synchronized void broken(NodeID neighbor) {
-
-    }
+    //If communication is broken with one neighbor, tear down the node
+	public synchronized void broken(NodeID neighbor)
+	{
+		for(int i = 0; i < neighbors.length; i++)
+		{
+			if(neighbor.getID() == neighbors[i].getID())
+			{
+				brokenNeighbors[i] = true;
+				notifyAll();
+				if(!terminating)
+				{
+					terminating = true;
+					myNode.tearDown();
+				}
+				return;
+			}
+		}
+	}
 
     // synchronized receive
     // invoked by Node class when it receives a message
@@ -86,6 +105,12 @@ class Application implements Listener {
         numNode = myNode.getNumNodes();
         num_neighbors = neighbors.length;
 
+        brokenNeighbors = new boolean[neighbors.length];
+		for(int i = 0; i < neighbors.length; i++)
+		{
+			brokenNeighbors[i] = false;
+		}
+
         List<List<Integer>> rt = new ArrayList<List<Integer>>();
         for (int i = 0; i < numNode; i++)
             rt.add(new ArrayList<>());
@@ -123,6 +148,27 @@ class Application implements Listener {
                 e.printStackTrace();
             }
         }
+
+        terminating = false;
+        if(myID.getID() == 0)
+		{
+            myNode.tearDown();
+        }
+
+        for(int i = 0; i < neighbors.length; i++)
+		{
+			while(!brokenNeighbors[i])
+			{
+				try
+				{
+					//wait till we get a broken reply from each neighbor
+					wait();
+				}
+				catch(InterruptedException ie)
+				{
+				}
+			}
+		}
 
         try {
             File myObj = new File(myID.getID() + "filename.txt");
