@@ -192,7 +192,5 @@ class Application implements Listener {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
-        myNode.tearDown();
     }
 }
