@@ -22,23 +22,23 @@ class ClientHandler extends Thread {
             try {
                 // Get the input stream from the socket
                 ObjectInputStream inStream = new ObjectInputStream(serverClient.getInputStream());
-                System.out.println("CH::run-> Waiting for data from the socket ...");
+                // System.out.println("CH::run-> Waiting for data from the socket ...");
                 // Read the message object
                 Message msg = (Message) inStream.readObject();
                 // Convert it into the payload and get the data and source ID
-                Payload p = Payload.getPayload(msg.data);
-                System.out.println("CH::run-> Hop Number " + p.getHop());
-                List<Integer> rt = p.getRoutingTable();
-                for(int i = 0; i< rt.size(); i++ )
-                {
-                    System.out.print(rt.get(i) + " ");
-                }
-                System.out.println();
+                // Payload p = Payload.getPayload(msg.data);
+                // System.out.println("CH::run-> Hop Number " + p.getHop());
+                // List<Integer> rt = p.getRoutingTable();
+                // for(int i = 0; i< rt.size(); i++ )
+                // {
+                //     System.out.print(rt.get(i) + " ");
+                // }
+                // System.out.println();
                 // Pass the message object to the listener.receive method to notifyall
                 listener.receive(msg);
             } catch (java.net.SocketException ex) {
                 System.out.println(ex);
-                System.out.println("CH::run-> Calling broken now");
+                // System.out.println("CH::run-> Calling broken now");
                 // If the socket is closed then make don't make the socket as alive
                 try {
                     serverClient.setKeepAlive(false);

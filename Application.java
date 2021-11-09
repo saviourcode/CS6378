@@ -34,7 +34,7 @@ class Application implements Listener {
     // synchronized receive
     // invoked by Node class when it receives a message
     public synchronized void receive(Message message) {
-        System.out.println("Received Function Called");
+        // System.out.println("Received Function Called");
 
         Payload p = Payload.getPayload(message.data);
 
@@ -44,7 +44,7 @@ class Application implements Listener {
         }
 
         if (buffer.get(round).size() == num_neighbors) {
-            System.out.println("I Notified All");
+            // System.out.println("I Notified All");
             notifyAll();
         }
     }
@@ -57,10 +57,10 @@ class Application implements Listener {
 
             List<List<Integer>> rt = myNode.getRoutingTable();
 
-            System.out.println("Neighbour RT for hop: " + hop);
-            for (int i = 0; i < neigbh_rt.size(); i++)
-                System.out.print(neigbh_rt.get(i) + " ");
-            System.out.println();
+            // System.out.println("Neighbour RT for hop: " + hop);
+            // for (int i = 0; i < neigbh_rt.size(); i++)
+            //     System.out.print(neigbh_rt.get(i) + " ");
+            // System.out.println();
 
             for (int i = 0; i < neigbh_rt.size(); i++) {
                 if (!st.contains(neigbh_rt.get(i))) {
@@ -69,12 +69,12 @@ class Application implements Listener {
                 }
             }
 
-            System.out.println("My RT");
-            for (int i = 0; i < rt.size(); i++) {
-                for (int j = 0; j < rt.get(i).size(); j++)
-                    System.out.print(rt.get(i).get(j) + " ");
-                System.out.println();
-            }
+            // System.out.println("My RT");
+            // for (int i = 0; i < rt.size(); i++) {
+            //     for (int j = 0; j < rt.get(i).size(); j++)
+            //         System.out.print(rt.get(i).get(j) + " ");
+            //     System.out.println();
+            // }
 
             myNode.setRoutingTable(rt);
         }
@@ -113,7 +113,7 @@ class Application implements Listener {
         myNode.setRoutingTable(rt);
 
         for (round = 0; round < numNode - 1; round++) {
-            System.out.println("Going to send for hop: " + round);
+            // System.out.println("Going to send for hop: " + round);
 
             Payload p = new Payload(myNode.getRoutingTable().get(round), round);
             Message msg = new Message(myNode.getNodeID(), p.toBytes());
@@ -122,14 +122,14 @@ class Application implements Listener {
             try {
                 wait();
                 buildRoutingTable();
-                System.out.println("Final RT");
-                List<List<Integer>> myRt = myNode.getRoutingTable();
-                for (int k = 0; k < myRt.size(); k++) {
-                    for (int j = 0; j < myRt.get(k).size(); j++) {
-                        System.out.print(myRt.get(k).get(j) + " ");
-                    }
-                    System.out.println();
-                }
+                // System.out.println("Final RT");
+                // List<List<Integer>> myRt = myNode.getRoutingTable();
+                // for (int k = 0; k < myRt.size(); k++) {
+                //     for (int j = 0; j < myRt.get(k).size(); j++) {
+                //         System.out.print(myRt.get(k).get(j) + " ");
+                //     }
+                //     System.out.println();
+                // }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -141,27 +141,6 @@ class Application implements Listener {
             Message msg = new Message(myNode.getNodeID(), p.toBytes());
             myNode.sendToAll(msg);
         }
-
-        // terminating = false;
-        // if(myID.getID() == 0)
-		// {
-        //     myNode.tearDown();
-        // }
-
-        // for(int i = 0; i < neighbors.length; i++)
-		// {
-		// 	while(!brokenNeighbors[i])
-		// 	{
-		// 		try
-		// 		{
-		// 			//wait till we get a broken reply from each neighbor
-		// 			wait();
-		// 		}
-		// 		catch(InterruptedException ie)
-		// 		{
-		// 		}
-		// 	}
-		// }
 
         try {
             File myObj = new File(myID.getID() + "filename.txt");
