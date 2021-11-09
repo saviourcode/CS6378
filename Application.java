@@ -12,8 +12,8 @@ class Application implements Listener {
 
     boolean recvData[][];
 
-    //Flag to check if connection to neighbors[i] has been broken
-	boolean[] brokenNeighbors;
+    // Flag to check if connection to neighbors[i] has been broken
+    boolean[] brokenNeighbors;
 
     NodeID[] neighbors;
     int num_neighbors;
@@ -25,27 +25,29 @@ class Application implements Listener {
 
     String configFile;
 
-    //If communication is broken with one neighbor, tear down the node
-	public synchronized void broken(NodeID neighbor)
-	{
-		
-	}
+    // If communication is broken with one neighbor, tear down the node
+    public synchronized void broken(NodeID neighbor) {
+
+    }
 
     // synchronized receive
     // invoked by Node class when it receives a message
     public synchronized void receive(Message message) {
         // System.out.println("Received Function Called");
+        try {
+            Payload p = Payload.getPayload(message.data);
 
-        Payload p = Payload.getPayload(message.data);
+            if (recvData[p.getHop()][message.source.getID()] == false) {
+                buffer.computeIfAbsent(p.getHop(), k -> new ArrayList<>()).add(p);
+                recvData[p.getHop()][message.source.getID()] = true;
+            }
 
-        if(recvData[p.getHop()][message.source.getID()] == false){
-            buffer.computeIfAbsent(p.getHop(), k -> new ArrayList<>()).add(p);
-            recvData[p.getHop()][message.source.getID()] = true;
-        }
-
-        if (buffer.get(round).size() == num_neighbors) {
-            // System.out.println("I Notified All");
-            notifyAll();
+            if (buffer.get(round).size() == num_neighbors) {
+                // System.out.println("I Notified All");
+                notifyAll();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -59,7 +61,7 @@ class Application implements Listener {
 
             // System.out.println("Neighbour RT for hop: " + hop);
             // for (int i = 0; i < neigbh_rt.size(); i++)
-            //     System.out.print(neigbh_rt.get(i) + " ");
+            // System.out.print(neigbh_rt.get(i) + " ");
             // System.out.println();
 
             for (int i = 0; i < neigbh_rt.size(); i++) {
@@ -71,9 +73,9 @@ class Application implements Listener {
 
             // System.out.println("My RT");
             // for (int i = 0; i < rt.size(); i++) {
-            //     for (int j = 0; j < rt.get(i).size(); j++)
-            //         System.out.print(rt.get(i).get(j) + " ");
-            //     System.out.println();
+            // for (int j = 0; j < rt.get(i).size(); j++)
+            // System.out.print(rt.get(i).get(j) + " ");
+            // System.out.println();
             // }
 
             myNode.setRoutingTable(rt);
@@ -125,18 +127,17 @@ class Application implements Listener {
                 // System.out.println("Final RT");
                 // List<List<Integer>> myRt = myNode.getRoutingTable();
                 // for (int k = 0; k < myRt.size(); k++) {
-                //     for (int j = 0; j < myRt.get(k).size(); j++) {
-                //         System.out.print(myRt.get(k).get(j) + " ");
-                //     }
-                //     System.out.println();
+                // for (int j = 0; j < myRt.get(k).size(); j++) {
+                // System.out.print(myRt.get(k).get(j) + " ");
+                // }
+                // System.out.println();
                 // }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
 
-        for(int i = 0; i < numNode-1;i++)
-        {
+        for (int i = 0; i < numNode - 1; i++) {
             Payload p = new Payload(myNode.getRoutingTable().get(i), i);
             Message msg = new Message(myNode.getNodeID(), p.toBytes());
             myNode.sendToAll(msg);
