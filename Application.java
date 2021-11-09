@@ -149,26 +149,26 @@ class Application implements Listener {
             }
         }
 
-        terminating = false;
-        if(myID.getID() == 0)
-		{
-            myNode.tearDown();
-        }
+        // terminating = false;
+        // if(myID.getID() == 0)
+		// {
+        //     myNode.tearDown();
+        // }
 
-        for(int i = 0; i < neighbors.length; i++)
-		{
-			while(!brokenNeighbors[i])
-			{
-				try
-				{
-					//wait till we get a broken reply from each neighbor
-					wait();
-				}
-				catch(InterruptedException ie)
-				{
-				}
-			}
-		}
+        // for(int i = 0; i < neighbors.length; i++)
+		// {
+		// 	while(!brokenNeighbors[i])
+		// 	{
+		// 		try
+		// 		{
+		// 			//wait till we get a broken reply from each neighbor
+		// 			wait();
+		// 		}
+		// 		catch(InterruptedException ie)
+		// 		{
+		// 		}
+		// 	}
+		// }
 
         try {
             File myObj = new File(myID.getID() + "filename.txt");
@@ -192,5 +192,7 @@ class Application implements Listener {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+
+        myNode.tearDown();
     }
 }
