@@ -37,7 +37,7 @@ class ClientHandler extends Thread {
                 // Pass the message object to the listener.receive method to notifyall
                 listener.receive(msg);
             } catch (java.net.SocketException ex) {
-                System.out.println(ex);
+                // System.out.println(ex);
                 // System.out.println("CH::run-> Calling broken now");
                 // If the socket is closed then make don't make the socket as alive
                 try {
@@ -50,7 +50,7 @@ class ClientHandler extends Thread {
                 listener.broken(clientNodeID);
                 break;
             } catch (Exception ex) {
-                System.out.println(ex);
+                // System.out.println(ex);
                 // If EOF Exception is raised then also call the broken method to close the other socket connection
                 listener.broken(clientNodeID);
                 break;

@@ -47,7 +47,7 @@ class Application implements Listener {
                 notifyAll();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
@@ -144,10 +144,10 @@ class Application implements Listener {
         }
 
         try {
-            File myObj = new File(myID.getID() + "filename.txt");
+            File myObj = new File(myID.getID() + "output.txt");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
-                FileWriter myWriter = new FileWriter(myID.getID() + "filename.txt");
+                FileWriter myWriter = new FileWriter(myID.getID() + "output.txt");
                 List<List<Integer>> myRt = myNode.getRoutingTable();
                 for (int i = 0; i < myRt.size(); i++) {
                     myWriter.write(i + 1 + ": ");
