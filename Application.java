@@ -149,7 +149,7 @@ class Application implements Listener {
                 System.out.println("File created: " + myObj.getName());
                 FileWriter myWriter = new FileWriter(myID.getID() + "output.txt");
                 List<List<Integer>> myRt = myNode.getRoutingTable();
-                for (int i = 0; i < myRt.size(); i++) {
+                for (int i = 0; i < myRt.size() - 1; i++) {
                     myWriter.write(i + 1 + ": ");
                     for (int j = 0; j < myRt.get(i).size(); j++) {
                         myWriter.write(myRt.get(i).get(j) + " ");
