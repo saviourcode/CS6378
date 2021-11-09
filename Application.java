@@ -10,7 +10,7 @@ class Application implements Listener {
 
     int round = 0;
 
-    boolean terminating;
+    boolean recvData[][];
 
     //Flag to check if connection to neighbors[i] has been broken
 	boolean[] brokenNeighbors;
@@ -28,20 +28,7 @@ class Application implements Listener {
     //If communication is broken with one neighbor, tear down the node
 	public synchronized void broken(NodeID neighbor)
 	{
-		for(int i = 0; i < neighbors.length; i++)
-		{
-			if(neighbor.getID() == neighbors[i].getID())
-			{
-				brokenNeighbors[i] = true;
-				notifyAll();
-				if(!terminating)
-				{
-					terminating = true;
-					myNode.tearDown();
-				}
-				return;
-			}
-		}
+		
 	}
 
     // synchronized receive
@@ -51,7 +38,10 @@ class Application implements Listener {
 
         Payload p = Payload.getPayload(message.data);
 
-        buffer.computeIfAbsent(p.getHop(), k -> new ArrayList<>()).add(p);
+        if(recvData[p.getHop()][message.source.getID()] == false){
+            buffer.computeIfAbsent(p.getHop(), k -> new ArrayList<>()).add(p);
+            recvData[p.getHop()][message.source.getID()] = true;
+        }
 
         if (buffer.get(round).size() == num_neighbors) {
             System.out.println("I Notified All");
@@ -105,11 +95,7 @@ class Application implements Listener {
         numNode = myNode.getNumNodes();
         num_neighbors = neighbors.length;
 
-        brokenNeighbors = new boolean[neighbors.length];
-		for(int i = 0; i < neighbors.length; i++)
-		{
-			brokenNeighbors[i] = false;
-		}
+        recvData = new boolean[numNode-1][num_neighbors];
 
         List<List<Integer>> rt = new ArrayList<List<Integer>>();
         for (int i = 0; i < numNode; i++)
@@ -147,6 +133,13 @@ class Application implements Listener {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+
+        for(int i = 0; i < numNode-1;i++)
+        {
+            Payload p = new Payload(myNode.getRoutingTable().get(i), i);
+            Message msg = new Message(myNode.getNodeID(), p.toBytes());
+            myNode.sendToAll(msg);
         }
 
         // terminating = false;
